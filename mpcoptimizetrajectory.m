@@ -1,32 +1,33 @@
-function  [command, current_MPC_solution, predicted_trajectory] = mpcoptimizetrajectory(current_state, current_MPC_solution)
+function  [command, y_optimum, predicted_trajectory] = ...
+    mpcoptimizetrajectory(current_state, y_optimum)
 
 
-%parameters
-alpha=1;
-beta=1;
-gamma=1;
-delta=1;
+    %parameters
+    alpha=1;
+    beta=1;
+    gamma=1;
+    delta=10;
 
-% Initial conditions
-x1_init = 0;
-x2_init = 0;
+    % Initial conditions
+    x1_init = current_state(1);
+    x2_init = current_state(2);
+    
+    [H, Ts, id_v, id_theta] = parameters;
 
-%prediction horizont
-H=5;
-id_v = 1:H;
-id_theta = (1:H) + H;
+    %initial conditions
+    if isempty(y_optimum)
+        y_optimum = zeros(2*H,1);
+    end
 
-%initial conditions
-init=linspace(0,1,2*H);
-
-    [y_optimum, ~] = fmincon(@(y)costfunction(y, H, x1_init, x2_init, alpha, beta, gamma, delta),init);
+    [y_optimum, ~] = fmincon(@(y)costfunction(y, H, x1_init, x2_init, alpha, beta, gamma, delta), y_optimum);
     theta_optimum = y_optimum(id_theta);
     v_optimum = y_optimum(id_v);
     command = [v_optimum(1), theta_optimum(1)];
-    current_MPC_solution = y_optimum;
-    
-    [x1,x2] = discretizemodel(v_optimum, theta_optimum,H,x1_init,x2_init);
+
+    [x1,x2] = discretizemodel(v_optimum, theta_optimum,x1_init,x2_init);
     predicted_trajectory = [x1,x2];
+
     
-   
+end
+
 

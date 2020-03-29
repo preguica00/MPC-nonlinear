@@ -1,6 +1,6 @@
-function [x1, x2] = discretizemodel(v, theta, H,x1_init,x2_init)
+function [x1, x2] = discretizemodel(v, theta, x1_init,x2_init)
 
-    Ts = 1;
+    [H, Ts, id_v, id_theta] = parameters;
     
     % Predicted trajectory
     x1 = nan(H+1, 1);
