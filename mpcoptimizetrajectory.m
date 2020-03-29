@@ -1,4 +1,4 @@
-function nonlinearmpc = mpcoptimizetrajectory()
+function = mpcoptimizetrajectory()
 
 
 

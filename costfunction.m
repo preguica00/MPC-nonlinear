@@ -11,8 +11,8 @@ id_theta = (1:H) + H;
 v = y(id_v);
 theta = y(id_theta);
 
-[x1,x2] = discretizemodel(v, theta,H,x1_init,x2_init)
+[x1,x2] = discretizemodel(v, theta,H,x1_init,x2_init);
 
-cost = sum(alpha*(x1(:)-x1_final).^2+(beta*x2(:)-x2_final).^2 + (gamma*v(:)).^2+ (delta*theta(:)).^2);   
-plot(x1,x2)
+cost = sum(alpha*(x1(:)-x1_final).^2+beta*(x2(:)-x2_final).^2 + gamma*(v(:)).^2+ delta*(theta(:)).^2);   
+
 end
