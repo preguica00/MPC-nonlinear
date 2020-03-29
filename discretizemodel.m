@@ -1,4 +1,4 @@
-function [x1, x2] = discretizemodel(v, theta, H,x1_init,x2_init, v_init, theta_init)
+function [x1, x2] = discretizemodel(v, theta, H,x1_init,x2_init)
 
     Ts = 1;
     
@@ -9,8 +9,6 @@ function [x1, x2] = discretizemodel(v, theta, H,x1_init,x2_init, v_init, theta_i
     % Set initial condition at start of trajectory
     x1(1) = x1_init;
     x2(1) = x2_init;
-    theta(1) = theta_init;
-    v(1) = v_init;
     % Run discrete prediction
     for i = 1:H
         x1(i+1) = x1(i) + Ts*v(i)*cos(theta(i));
