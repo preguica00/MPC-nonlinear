@@ -12,22 +12,22 @@ function  [command, y_optimum, predicted_trajectory] = ...
     x1_init = current_state(1);
     x2_init = current_state(2);
     
-    [H, Ts, id_v, id_theta] = parameters;
+    [H, Ts, id_v, id_theta,id_x1,id_x2] = parameters;
 
     %initial conditions
     if isempty(y_optimum)
-        y_optimum = zeros(2*H,1);
+        y_optimum = zeros(4*H,1);
     end
 
-    [y_optimum, ~] = fmincon(@(y)costfunction(y, H, x1_init, x2_init, alpha, beta, gamma, delta), y_optimum);
+    [y_optimum, ~] = fmincon(@(y)costfunction(y, H,alpha, beta, gamma, delta), y_optimum,[],[],[],[],[],[],@(y)discretizemodel(y,x1_init,x2_init));
     theta_optimum = y_optimum(id_theta);
     v_optimum = y_optimum(id_v);
     command = [v_optimum(1), theta_optimum(1)];
 
-    [x1,x2] = discretizemodel(v_optimum, theta_optimum,x1_init,x2_init);
-    predicted_trajectory = [x1,x2];
 
-    
+    x1_optimum = y_optimum(id_x1);
+    x2_optimum = y_optimum(id_x2);
+    predicted_trajectory = [x1_optimum,x2_optimum];
 end
 
 
