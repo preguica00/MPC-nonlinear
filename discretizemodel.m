@@ -22,8 +22,8 @@ x2hat = y(id_x2);
 
 % Run discrete prediction
 for i = 1:H
-    x1(i+1) = x1(i) + Ts*v(i)*cos(theta(i));
-    x2(i+1) = x2(i) + Ts*v(i)*sin(theta(i));
+    x1(i+1) = x1hat(i) + Ts*v(i)*cos(theta(i));
+    x2(i+1) = x2hat(i) + Ts*v(i)*sin(theta(i));
     obsx(i)=obj_coord(1);
     obsy(i)=obj_coord(2);
 end
