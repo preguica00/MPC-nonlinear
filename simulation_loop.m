@@ -14,8 +14,9 @@ function simulation_loop()
     
     [H, Ts, id_v, id_theta,id_x1,id_x2] = parameters;
     [xobs,yobs, obj_coord,radius] = obstacle;
+        plot(xobs,yobs);
 
-    for k = 1:10
+    for k = 1:50
         
         %% Run the controller
         [command, current_MPC_solution, predicted_trajectory] = ...
@@ -25,7 +26,6 @@ function simulation_loop()
         current_state = simulate_timestep(current_state, command);
 
         %% Visualize
-        plot(xobs,yobs);
         plot_prediction.XData = predicted_trajectory(:,1);
         plot_prediction.YData = predicted_trajectory(:,2);
         plot_trajectory.XData(end+1) = current_state(1);
